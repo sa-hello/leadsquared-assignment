@@ -1,7 +1,7 @@
 import React from 'react'
 import { Droppable } from 'react-beautiful-dnd';
 
-import Tab from './Tab'
+import Tab from '../presentationcomponents/Tab'
 
 
 export default class Tabs extends React.Component {
@@ -9,38 +9,51 @@ export default class Tabs extends React.Component {
         super(props);
     
         this.state = {
-            // activeTab: this.props.children[0].props.label,
-            // activeTab: this.props.children[0].props.tabNum,
             activeTab: "tab-1",
         };
     }
     
     onClickTabItem = (tab) => {
         this.setState({ activeTab: tab });
-        // console.log(tab)
         this.props.setActiveTab(tab)
     }
 
     closeTabItem = (tab) => {
-        // console.log(tab)
         this.props.closeTabItem(tab)
     }
 
+    showChevronAtTab = () => {
+        if (window.screen.availWidth > 650) {
+            return 4;
+        } else {
+            return 2;
+        }
+    }
+
+
     render() {
         // console.log(this)
+
         const { onClickTabItem, props: { children, activeTab } } = this;
+        const showChevronAtTabNumber = this.showChevronAtTab()
 
         return (
-            <div className="tabs">
-                <div style={{display: 'flex'}}>
-                    {/* <h1>&#x3c;</h1> */}
+            <div className="navigation__tab_overlay">
+                <div className="navtabs">
+                    {this.props.tabCount > showChevronAtTabNumber && 
+                        this.props.firstTab !== this.props.activeTab
+                        ? <p className="chevron chevron_left">&#x3c;</p>
+                        : <span className="chevron_placeholder"></span>
+                    }
+                    
                     <Droppable droppableId="droppable-nav" direction="horizontal">
-                        {(provided) => (
+                        {(provided, snapshot) => (
                             <div
                                 ref={provided.innerRef}
                                 {...provided.droppableProps}
+                                // style={snapshot.isDraggingOver ? {background: 'red'} : {background: 'var(--nav-background)'}}
                             >
-                                <ol className="tab-list">
+                                <ol className="tab_list">
                                     {children.map((child, index) => {
                                     const { label, tabNum } = child.props;
                         
@@ -62,14 +75,25 @@ export default class Tabs extends React.Component {
                             </div>
                         )}
                     </Droppable>
-                    {/* <h1>&#x3e;</h1> */}
+                    
+                    {this.props.tabCount > showChevronAtTabNumber && 
+                        this.props.lastTab !== this.props.activeTab
+                        ? <p className="chevron chevron_right">&#x3e;</p>
+                        : null
+                    }
+                    
+                    {this.props.tabCount < 10 
+                        ? <h1 className="add_tab_button" onClick={this.props.addNewTab}>+</h1>
+                        : null
+                    }
                 </div>
-                <div className="tab-content">
+
+                <div className="navtab_content">
                     {children.map((child) => {
                         if (child.props.tabNum !== activeTab) return undefined;
-                            // return child.props.children;
                             return child.props.tabContent;
-                        })}
+                        })
+                    }
                 </div>
             </div>
         );

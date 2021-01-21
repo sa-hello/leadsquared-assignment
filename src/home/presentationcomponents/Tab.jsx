@@ -4,7 +4,7 @@ import { Draggable } from 'react-beautiful-dnd';
 
 export default class Tab extends React.Component {
     onClick = (e) => {
-        if(e.target.className !== "tab-close") {
+        if(e.target.className !== "tab_close") {
             const { tabNum, onClick } = this.props;
             onClick(tabNum);
         }
@@ -18,26 +18,24 @@ export default class Tab extends React.Component {
         // console.log(this.props)
 
         const { onClick, props: { activeTab, label, tabNum, index } } = this;
+        let className = 'tab_list_item';
     
-        let className = 'tab-list-item';
-    
-        // if (activeTab === label) {
         if (activeTab === tabNum) {
-          className += ' tab-list-active';
+          className += ' tab_list_active';
         }
     
         return (
             <Draggable draggableId={tabNum} index={index}>
-                {(provided) => (
-                    <li
-                        ref={provided.innerRef}
+                {(provided, snapshot) => (
+                    <li ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         className={className}
                         onClick={onClick}
+                        // style={snapshot.isDragging ? {background: 'red'} : {background: 'white'}}
                     >
                         {label}
-                        <span onClick={() => this.closeTab(tabNum)} className="tab-close">x</span>
+                        <span onClick={() => this.closeTab(tabNum)} className="tab_close">x</span>
                     </li>
                 )}
             </Draggable>

@@ -6,7 +6,6 @@ import TabElement from '../presentationcomponents/TabElement'
 import Modal from '../../sharedmodules/CommonModal'
 
 
-
 export default class TabDisplayController extends React.Component {
     constructor(props) {
         super(props);
@@ -54,13 +53,9 @@ export default class TabDisplayController extends React.Component {
             "tabNum": "tab-" + tabNum,
             "tabContent": "This is content. Tab  no is = " + tabNum
         }; 
-        // console.log('add tabnum ', tabNum, this.tabState)
-        
 
         const { tabList } = this.state
         let isTabListEmpty = tabList.length > 0 ? false : true 
-
-        // console.log('add tablist', tabList)
 
         tabList.push(
             <TabElement key={tabNum} 
@@ -74,9 +69,18 @@ export default class TabDisplayController extends React.Component {
         const tabCount = tabList.length
 
         if(isTabListEmpty) {
-            this.setState({tabList, tabCount, totalCount: tabNum, activeTab: "tab-" + tabNum})
+            this.setState({
+                tabList, 
+                tabCount, 
+                totalCount: tabNum, 
+                activeTab: "tab-" + tabNum
+            })
         } else {
-            this.setState({tabList, tabCount, totalCount: tabNum})
+            this.setState({
+                tabList, 
+                tabCount, 
+                totalCount: tabNum
+            })
         }
     }
 
@@ -84,7 +88,7 @@ export default class TabDisplayController extends React.Component {
         const tabList = []
         const tabState = {}
         
-        
+        // if initializes data 
         if(Object.keys(this.tabState).length > 0) {
             for(let tab in this.tabState) {
                 tabList.push(
@@ -122,7 +126,6 @@ export default class TabDisplayController extends React.Component {
         }
 
         this.setState({tabList})
-        // return tabList
     }
 
     openModal() {
@@ -134,21 +137,28 @@ export default class TabDisplayController extends React.Component {
     }
 
     confirmCloseTabItem(tabNum) {
-        // console.log('dete tab', tabNum)
         this.setState({showModal: true, deleteTab: tabNum})
     }
     
     closeTabItem() {
         delete this.tabState[this.state.deleteTab]
-        // console.log("tab num", this.state.deleteTab, this.state.activeTab, this.tabState)
+
+        // set active tab to 1st tab if active tab is deleted
         if(this.state.deleteTab === this.state.activeTab) {
-            this.setState({deleteTab: undefined, showModal: false, activeTab: Object.keys(this.tabState)[0], tabCount: this.getTabCount() - 1}, 
-            () => {
+            this.setState({
+                deleteTab: undefined, 
+                showModal: false, 
+                activeTab: Object.keys(this.tabState)[0], 
+                tabCount: this.getTabCount() - 1
+            }, () => {
                 this.createTabs()
             })
         } else {
-            this.setState({deleteTab: undefined, showModal: false, tabCount: this.getTabCount() - 1}, 
-            () => {
+            this.setState({
+                deleteTab: undefined, 
+                showModal: false, 
+                tabCount: this.getTabCount() - 1
+            }, () => {
                 this.createTabs()
             })
         }
@@ -161,7 +171,10 @@ export default class TabDisplayController extends React.Component {
     onDragEnd(result) {
         const { destination, source, draggableId } = result
         // console.log(result)
-
+        
+        /* return if drog and drop on the same position or
+         * destination outside of context
+         */
         if(!destination) return
         
         let sourceKey = source.index
@@ -169,100 +182,54 @@ export default class TabDisplayController extends React.Component {
 
         if(sourceKey === destinationKey) return
         
+        // reorder by changing position of current tabState key array
         let tempObj = Object.assign({}, this.tabState)
         let dummy = {}
         const existingOrder = Object.keys(tempObj)
-
-        // console.log("existingOrder dragid sk dk", existingOrder, draggableId, sourceKey, destinationKey)
-
         const newOrder = Array.from(existingOrder)
         newOrder.splice(sourceKey, 1)
-        // console.log("newOrder", newOrder)
         newOrder.splice(destinationKey, 0, draggableId)
-        // console.log("newOrder", newOrder)
 
         for(let key of newOrder) {
             dummy[key] = tempObj[key]
         }
 
-        
-        // let destinationKeyVal =  tempObj[destinationKey]
-        // let sourceKeyVal =  tempObj[sourceKey]
-
-        // // tempObj[destinationKey] = tempObj[sourceKey]
-        // // delete tempObj[sourceKey]
-        
-        // for(let key in tempObj) {
-        //     // console.log(sourceKey, destinationKey, key)
-        //     if(key === destinationKey) {
-        //         dummy[sourceKey] = sourceKeyVal
-        //         // console.log("destination", dummy)
-        //     } else if (key === sourceKey) {
-        //         dummy[destinationKey] = destinationKeyVal
-        //         // console.log("source", dummy)
-        //     } else {
-        //         dummy[key] = tempObj[key]
-        //         // console.log("else", dummy)
-        //     }
-        // }
-            
         this.tabState = Object.assign({}, dummy)
-        // console.log(this.tabState, order, tempObj, dummy)
-        // console.log(dummy, this.tabState)
-        // console.log(tempObj)
         this.createTabs();
     }
 
     
     render() {
         let modalBodyText = "Do you really want to delete this tab. The information will be lost forever!"
-        
+        let tabStateKeys = Object.keys(this.tabState)
         
         return (
-            // <DragDropContext onDragEnd={this.onDragEnd}>
-            //         {/* {this.createProvider()} */}
-            //         {(provided, snapshot) => (
-            //             <div
-            //                 ref={provided.innerRef}
-            //                 style={this.getListStyle(snapshot.isDraggingOver)}
-            //                 {...provided.droppableProps}
-            //             >
-            //             {this.createChildList()}
-            //             {provided.placeholder}
-            //             </div>
-            //         )}
-            //         {/* <h1>hello</h1> */}
-            // </DragDropContext>
-
             <div className="navigation">
+                <h1 className="navigation__header">Demo Navigation</h1>
+
                 <DragDropContext onDragEnd={this.onDragEnd}>
                     
                     <Tabs activeTab={this.state.activeTab} 
                         closeTabItem={this.confirmCloseTabItem} 
-                        setActiveTab={this.setActiveTab}> 
+                        setActiveTab={this.setActiveTab}
+                        addNewTab={this.addNewTab}
+                        tabCount={this.state.tabCount}
+                        firstTab={tabStateKeys[0]}
+                        lastTab={tabStateKeys[tabStateKeys.length - 1]}
+                    > 
                         {this.state.tabList}
                     </Tabs> 
 
                 </DragDropContext>
                 
-                {/* <Tabs activeTab={this.state.activeTab} 
-                    closeTabItem={this.confirmCloseTabItem} 
-                    setActiveTab={this.setActiveTab}> 
-                    {this.state.tabList}
-                </Tabs>  */}
-                
                 {this.state.showModal 
-                    ? <Modal headerText="Delete Tab?" 
+                    ? <Modal headerText={"Delete " + this.state.deleteTab + " ?"}  
                         modalBody={modalBodyText}
                         confirmButton={true}
                         confirmButtonText={"Delete"}
                         confirmButtonAction={this.closeTabItem}
                         closeButtonAction={this.closeModal}
                     />
-                    : null
-                }
-                {this.getTabCount() < 10 
-                    ? <h1 onClick={this.addNewTab}>+</h1>
                     : null
                 }
             </div>

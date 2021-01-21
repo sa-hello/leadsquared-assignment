@@ -10,7 +10,8 @@ export default function Modal (props) {
                 </div>
                 <div className="modal__container__footer">
                     {props.confirmButton 
-                        ? <button onClick={props.confirmButtonAction}>{props.confirmButtonText || 'Confirm'}</button>
+                        ? <button style={{marginRight: '15px'}} 
+                            onClick={props.confirmButtonAction}>{props.confirmButtonText || 'Confirm'}</button>
                         : null
                     }
                     <button onClick={props.closeButtonAction}>{props.closeButtonText || 'Close'}</button>
