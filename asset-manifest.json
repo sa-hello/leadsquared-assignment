@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/leadsquared-assignment/static/css/main.e9cf6bd2.chunk.css",
-    "main.js": "/leadsquared-assignment/static/js/main.b995a696.chunk.js",
-    "main.js.map": "/leadsquared-assignment/static/js/main.b995a696.chunk.js.map",
+    "main.js": "/leadsquared-assignment/static/js/main.55b7008c.chunk.js",
+    "main.js.map": "/leadsquared-assignment/static/js/main.55b7008c.chunk.js.map",
     "runtime-main.js": "/leadsquared-assignment/static/js/runtime-main.4c4a067c.js",
     "runtime-main.js.map": "/leadsquared-assignment/static/js/runtime-main.4c4a067c.js.map",
     "static/js/2.3c9c9516.chunk.js": "/leadsquared-assignment/static/js/2.3c9c9516.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.4c4a067c.js",
     "static/js/2.3c9c9516.chunk.js",
     "static/css/main.e9cf6bd2.chunk.css",
-    "static/js/main.b995a696.chunk.js"
+    "static/js/main.55b7008c.chunk.js"
   ]
 }
