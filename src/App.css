@@ -278,6 +278,7 @@ h1, h2, h3, h4, h5, h6, p {
   transition: transform .1s ease,-webkit-transform .1s ease;
   box-shadow: 1px 4px 4px 2px rgba(0, 0, 0, 0.1);
   outline: none;
+  margin-bottom: 10px;
 }
 
 .modal__container__footer button:hover {
@@ -309,6 +310,9 @@ h1, h2, h3, h4, h5, h6, p {
   .navigation__tab_overlay .navtabs > div {
     width: 80%;
   }
+  .modal__container {
+    width: 95%;
+  }
 }
 
 @media only screen and (max-width: 450px) {
@@ -317,5 +321,10 @@ h1, h2, h3, h4, h5, h6, p {
   }
   .navigation__tab_overlay .navtabs > div {
     width: 75%;
+  }
+  .modal__container__header,
+  .modal__container__body,
+  .modal__container__footer {
+    padding: 10px;
   }
 }
