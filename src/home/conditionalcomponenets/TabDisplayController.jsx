@@ -51,7 +51,7 @@ export default class TabDisplayController extends React.Component {
             "label": "tab" + tabNum,
             "key": tabNum - 1,
             "tabNum": "tab-" + tabNum,
-            "tabContent": "This is content. Tab  no is = " + tabNum
+            "tabContent": "Content Placeholder here. Tab number is " + tabNum
         }; 
 
         const { tabList } = this.state
@@ -60,7 +60,7 @@ export default class TabDisplayController extends React.Component {
         tabList.push(
             <TabElement key={tabNum} 
                 tabNum={"tab-" + tabNum} 
-                tabContent={"This is content. Tab  no is = " + tabNum}
+                tabContent={"Content Placeholder here. Tab number is " + tabNum}
                 label={"tab" + tabNum}
                 index={tabNum}
             />
@@ -109,14 +109,14 @@ export default class TabDisplayController extends React.Component {
                     "label": label,
                     "key": i,
                     "tabNum": "tab-" + (i+1),
-                    "tabContent": "This is content. Tab  no is = " + (i+1)
+                    "tabContent": "Content Placeholder here. Tab number is " + (i+1)
                 }; 
 
                 tabList.push(
                     <TabElement key={i} 
                         // tabNum={i+1} 
                         tabNum={"tab-" + (i+1)} 
-                        tabContent={"This is content. Tab  no is = " + (i+1)}
+                        tabContent={"Content Placeholder here. Tab number is " + (i+1)}
                         label={"tab" + (i+1)}
                         index={i+1}
                     />
