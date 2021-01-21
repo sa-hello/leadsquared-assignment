@@ -1,4 +1,5 @@
 import React from 'react'
+import { Draggable } from 'react-beautiful-dnd';
 
 
 export default class Tab extends React.Component {
@@ -10,12 +11,13 @@ export default class Tab extends React.Component {
     }
 
     closeTab = (tabNum) => {
-        this.props.closeTabItem(tabNum - 1)
+        this.props.closeTabItem(tabNum)
     }
     
     render() {
-        const { onClick, props: { activeTab, label, tabNum } } = this;
         // console.log(this.props)
+
+        const { onClick, props: { activeTab, label, tabNum, index } } = this;
     
         let className = 'tab-list-item';
     
@@ -25,13 +27,20 @@ export default class Tab extends React.Component {
         }
     
         return (
-            <li
-                className={className}
-                onClick={onClick}
-            >
-                {label}
-                <span onClick={() => this.closeTab(tabNum)} className="tab-close">x</span>
-            </li>
+            <Draggable draggableId={tabNum} index={index}>
+                {(provided) => (
+                    <li
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        className={className}
+                        onClick={onClick}
+                    >
+                        {label}
+                        <span onClick={() => this.closeTab(tabNum)} className="tab-close">x</span>
+                    </li>
+                )}
+            </Draggable>
         );
     }
 }

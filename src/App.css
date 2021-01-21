@@ -3,6 +3,7 @@
   --secondary-color: #240090;
   --complementary-color: #81e22d;
   --background-color: #0c0032;
+  /* --background-color: white; */
   --nav-background: #282828;
 
   --primary-text-color: #fafafa; 
@@ -80,6 +81,10 @@ h1, h2, h3, h4, h5, h6, p {
   width: 90%;
 }
 
+.tabs [data-rbd-droppable-context-id="1"] {
+  width: 100%;
+}
+
 .tab-list {  
   /* width: 300px; */
   overflow: auto;
@@ -94,6 +99,7 @@ h1, h2, h3, h4, h5, h6, p {
   margin-bottom: -1px;
   padding: 0.5rem 0.75rem;
   width: 100px;
+  border: 1px solid grey;
 }
 
 .tab-list-active {
@@ -104,8 +110,8 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .tab-content {
-  color: white;
-  background: var(--primary-color);
+  background: white;
+  color: var(--primary-color);
 }
 
 .tab-close {
@@ -134,7 +140,7 @@ h1, h2, h3, h4, h5, h6, p {
 .modal__container {
   background-color: var(--nav-background);
   margin: 15% auto;
-  border: 1px solid #888;
+  border: 1px solid #555;
   width: 60%; 
   border-radius: 5px;
 }
